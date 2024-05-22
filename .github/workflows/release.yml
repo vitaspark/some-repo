@@ -1,0 +1,24 @@
+name: Action to run on push to main
+on:
+  push:
+    branches:
+      - main
+jobs:
+  update-readme-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: Update README.md
+        run: |
+          echo "This is an auto-generated README file" > README.md
+          echo "This file was last updated on $(date)" >> README.md
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update README.md
+          token: ${{ secrets.GITHUB_TOKEN }}
